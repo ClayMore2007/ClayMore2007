@@ -1,0 +1,14 @@
+
+print('1024*768=',1024*768)
+print('I\'m\"OK\"!')
+print('hello\nbao''\\\n\\')
+print('\\\t\\')
+print('\\\n\t\\')
+print(r'\\\n')
+print(r'''hello
+paul.\n\\
+how are you
+''')
+print(3<5 and 3>2)
+print(2<4 or 2>4)
+print(not True,not False)

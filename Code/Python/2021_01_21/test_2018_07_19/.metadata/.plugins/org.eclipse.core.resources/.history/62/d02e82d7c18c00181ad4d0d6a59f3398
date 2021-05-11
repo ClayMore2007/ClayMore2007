@@ -1,0 +1,10 @@
+
+print('1024*768=',1024*768)
+print('I\'m\"OK\"!')
+print('hello\nbao''\\\n\\')
+print('\\\t\\')
+print('\\\n\t\\')
+print(r'\\\n')
+print('''hello
+... paul
+... how are you''')

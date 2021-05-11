@@ -1,0 +1,110 @@
+a=1
+print(a)
+a='aplle'
+print(a)
+b=a
+a='ZSA'
+print(b)
+print(a)
+PI=3.141592
+print(PI)
+print(10/3)
+print(9/3)
+print(10//3)
+n=123
+print('n =',n)
+f=456.789
+print('f =',f)
+s1='Hello, world'
+print('s1=',s1)
+print('s2=','Hello,\\\'Adam\\\'\'')
+print('s3=','r\'Hello,\"Bart\"')
+print('s4=','r\'\'\'Hello,')
+print(r'''s4= r'Hello,"Bart"' ''')
+print('Lisa!\'\'\' ')
+print(ord('A'))
+b=b'ABC'
+print(b)
+a=1
+b=2
+print(a+b)
+a=a+5
+print(a)
+print(3/1.1)
+print(3.0/1.1)
+print(3/1)
+print(3e+20*3e+20)
+print(1**10+2**5)
+print(9%2)
+print(6**4)
+print((35.27+0.15)/3)
+print(12.5*16.7)
+F=30
+c=5/9*(F-32)
+print(c)
+a=80
+b=200
+c=a/b
+print('c= ',c)
+d=c*60
+print('d= ',d)
+e=int(d)
+print(e)
+f=float(e)
+print(f)
+g=38.8
+h=float(g)
+print(h)
+i='38.3'
+b=float(i)
+print(b,i)
+print(type(b))
+print(1.2*1212e50)
+print(0o10,0b10)
+print(1.45e9)
+print(''' ha\h'a
+'h' ''')
+print(PI)
+print('aaa\taaaa\\aaa\naaaaaa\'aaa\raaa')
+print(r'ad\'fd\'d')
+print('df"fdfd')
+print('sdf,sdfd',100,'adf','\r',110)#is good for you
+print('a'+'1')
+print('a'+str(1))
+print(1/2,1//2,1+0.1,2*2,32>>2,32//2**2,)
+print(bin(100))
+print(0b1100)
+print(~12)
+print(bin(-1))
+print(0b1100+0b1100)
+print(bin(0b1010^0b1001),bin(0b1010^0b10001001))
+a=1
+b=2
+a+=b
+print(a)
+print('你的月薪是多少：')
+a=input('>>>')#月薪
+print('你每年多发几个月薪水：')
+b=input('>>>')
+a=int(a)
+b=int(b)
+c=12
+d=c+int(b)#一年发几个月薪水
+t=3500#启征点
+f=a*(b+c)
+q=a*b
+
+print('你每年的的奖金是：',q)
+if a>t:
+    e=(a-((a-t)*0.2))*d
+elif 35000>e>9000:
+    e=(a-((a-t)*0.25))*d
+g=f-e
+print('你的税后年薪是：',e,'元\n','你的税后年薪是：',f,'元\n','你被扣税：',g,'元\n')
+
+if g<10000:
+    print('你扣的税还不算很多')
+elif g>20000:
+    print('哇！你被扣好多税')
+else:
+    print('你税扣得有点多奥')

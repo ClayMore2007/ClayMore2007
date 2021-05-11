@@ -1,0 +1,18 @@
+#a=int(input('>>>'))
+#b=int(input('>>>'))
+#if a>b:
+#    print(a)
+#else: 
+#    print(b)
+
+c=int(input('>>>'))
+if c<10:
+    print('1位')
+elif c<100:
+    print('2位')
+elif c<1000:
+    print('3位')
+elif c<10000:
+    print('4位')
+else:
+    print('5位')
