@@ -17,24 +17,15 @@ struct FOW
         float3 CheckPosition = float3(0,0,0);
 
         float CamToFogDir = max(CameraPosition.z - cloudSizeZ,0) / clamp(dot(CameraToWorPositionDir*-1,float3(0,0,1)),0.0001,1);
+
         // float PerStepLength = distance(WorldPosition,CameraPosition)/Step;
         for(int i =0; i < Step; ++i)
         {
 
-
-
             float CheckLength = i * PerStepLength + CamToFogDir;
-            if(CheckLength < Depth)
-            {
-                CheckPosition = CameraPosition + CameraToWorPositionDir * CheckLength;
-                if (CheckLength > Depth)
-                    break
-            }
 
+            CheckPosition = CameraPosition + CameraToWorPositionDir * CheckLength;
 
-            
-            
-            
             if(IfIsInCloud(CheckPosition))
             {
                 //density = density + 0.01;
@@ -42,11 +33,11 @@ struct FOW
             }
         }
         
-        float alpha = 1 - density;
-        alpha = clamp(alpha, 0, 1);
-        return alpha;
+        // float alpha = 1 - density;
+        // alpha = clamp(alpha, 0, 1);
+        // return alpha;
         // density = clamp(density,0,1);
-        // return density;
+        return density;
     }
 
     float3 getCloudDensityFromPosition(float3 WorldPosition)
@@ -102,7 +93,6 @@ struct FOW
             // float Z = UVW.z;
             // float ScaleAboutHeight = pow(WorldPosition.z/cloudSizeZ,HeightExp);
   
-
             return maskColor;
         }else
         {
