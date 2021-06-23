@@ -1,10 +1,10 @@
 struct Fow
 {
-
+    //Input float3 WorldPosition
     //Input float3 CameraPosition
     //Input float3 CameraToWordPositionDir
-    //Input float InStepCount;
-    //Input float InPerStepSize;
+    //Input float InStepCount
+    //Input float InPerStepSize
 
     //Input Texture FowTexture
     //Input Texture LastFowTexture
@@ -20,21 +20,34 @@ struct Fow
     //Input float FogDensityPerSample
 
     //Input float BlendAlpha
+
+    //Input Texture NoiseTexture
+    //Input float Time
     float GetFogDensity()
     {
         int StepCount = (int)InStepCount;
         float PerStepLength = InPerStepSize;
+        //StepCount = min(StepCount, MaxStep);
+        //PerStepLength = min(PerStepLength, DepthEyeLinear/StepCount);
 
         float TotalFogDensity = 0;
-
         float3 IntersectPosition = ComputeRayIntersectPosition(CameraPosition, CameraToWordPositionDir);
+
+        
+        float DepthEyeLinear  = dot((WorldPosition - IntersectPosition), CameraToWordPositionDir) ;
+        int MaxStep = (int)(DepthEyeLinear/PerStepLength);    
+
+
+
         for(int i = 0; i < StepCount; ++i)
         {
+
             float3 CheckPoint = IntersectPosition + CameraToWordPositionDir * i * PerStepLength;
             bool bIn = ComputeWorldPositionInCloudBox(CheckPoint);
             float3 NormalizeUVW = ComputeUVWIntargetPosition(CheckPoint);
             float FogComtribution = ComputeFogDensityFromNormalizeUVW(NormalizeUVW);
 
+            FogComtribution = i > MaxStep ? 0:FogComtribution;
 
 
             TotalFogDensity += bIn ? FogComtribution : 0;
@@ -110,42 +123,25 @@ struct Fow
         float PTexturevalue = PTexture.Sample(PTextureSampler, NormalizedUVW.rg).r;
 
 
-        // float NoiseModifiler = 1.0;
-
-        //float scale1 = asdfasdfasd * NormalizedUVW.z // HegithModifyer;
-        //
-
-        //float Noise1 = NoiseTexture.Sample(NormalizedUVW.xy * scale1 + offset1).r;
-        //float Noise2 = NoiseTexture.Sample(NormalizedUVW.xy * scale2 + offset2).r;
-        //float Noise3 = NoiseTexture.Sample(NormalizedUVW.xy * scale3 + offset3).r;
-
-        //float Total = Noise1 + Noise2 + Noise3;
-        //Total = Total / 3;
-        //float NoiseModifiler = Total;
-
-        NormalizedUVW.z = 0.5;
-        float scale1 =  NormalizedUVW.z;
-        // float scale2 =  NormalizedUVW.z;
-        // float scale3 =  NormalizedUVW.z;
-
-        float2 offset1 = float2(0,0);
-        float2 offset2 = float2(0,0);
-        float2 offset3 = float2(0,0);
+        //NormalizedUVW.z; // 0-1,
         
-        float Noise1 = NoiseTexture.Sample(NoiseTextureSampler,NormalizedUVW.xyz * scale1 + offset1).r;
-        // float Noise2 = NoiseTexture.Sample(NoiseTextureSampler,NormalizedUVW.xy * scale2 + offset2).r;
-        // float Noise3 = NoiseTexture.Sample(NoiseTextureSampler,NormalizedUVW.xy * scale3 + offset3).r;
-        // float Total = Noise1 + Noise2 + Noise3;
-        // Total = Total/3;
-        float Total = Noise1;
+        float2 offset0 = float2(0,0);
+        float2 offset1 = float2(0.2,0.2);
+
+        float NoiseValue1 = NoiseTexture.Sample(NoiseTextureSampler, NormalizedUVW.rg + offset0).r;
+        float NoiseValue2 = NoiseTexture.Sample(NoiseTextureSampler, NormalizedUVW.gb + offset1).r;
+        float NoiseValue3 = NoiseTexture.Sample(NoiseTextureSampler, NormalizedUVW.rb).r;
+        float Noisevalue4 = NoiseTexture.Sample(NoiseTextureSampler, NormalizedUVW.gb).r;
+
+        float Total = lerp(NoiseValue1, NoiseValue2, (NoiseValue3 + Noisevalue4)/2);
         float NoiseModifiler = Total;
 
         float LightPower = lerp(CurrentTexturevalue, LastTexturevalue, BlendAlpha);
         LightPower += PTexturevalue * PFogDensity;
 
 
-        // float FogContribution = clamp(1 - LightPower, 0, 1) * FogDensityPerSample * NoiseModifiler ;
-        float FogContribution = NoiseModifiler * FogDensityPerSample;
+        float FogContribution = clamp(1 - LightPower, 0, 1) * FogDensityPerSample * NoiseModifiler ;
+        //float FogContribution = NoiseModifiler * FogDensityPerSample;
         // return LightPower;
 
         return FogContribution;
@@ -153,3 +149,6 @@ struct Fow
 
 };Fow f;
 return f.GetFogDensity();
+
+//---------------------------------------------------------------------------------------------------------
+

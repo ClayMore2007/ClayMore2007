@@ -1,0 +1,2 @@
+﻿  main.cpp
+e:\git\claymore2007\code\c++\project_2021_03_09\learnc++\test_02\main.cpp(11): error C3867: “Character::Attack”: 非标准语法；请使用 "&" 来创建指向成员的指针
