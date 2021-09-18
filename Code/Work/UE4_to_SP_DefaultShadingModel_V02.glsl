@@ -472,7 +472,6 @@ void shade(V2F inputs) {
 
 
     vec3 IBLSpecular = pbrComputeSpecular(local, specularColor, roughness);
-
     IBLSpecular = IBLSpecular * (1.0 - EnvLightDesaturation) + dot(IBLSpecular,LuminanceFactors) * EnvLightDesaturation;
     
     specular += IBLSpecular * EnvLightModifiler;
